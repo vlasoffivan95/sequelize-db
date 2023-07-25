@@ -1,7 +1,5 @@
-'use strict';
-const {
-  Model
-} = require('sequelize');
+"use strict";
+const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class Car extends Model {
     /**
@@ -13,16 +11,67 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
     }
   }
-  Car.init({
-    model: DataTypes.STRING,
-    manufacturer: DataTypes.STRING,
-    modelYear: DataTypes.INTEGER,
-    price: DataTypes.DECIMAL,
-    isUsed: DataTypes.BOOLEAN,
-    serialNumber: DataTypes.STRING
-  }, {
-    sequelize,
-    modelName: 'Car',
-  });
+  Car.init(
+    {
+      model: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          notNull: true,
+          isAlphanumeric: true,
+          notEmpty: true,
+        },
+      },
+      manufacturer: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          notNull: true,
+          isAlpha: true,
+          notEmpty: true,
+        },
+      },
+      modelYear: {
+        type: DataTypes.INTEGER,
+        validate: {
+          isInt: true,
+        },
+      },
+      price: {
+        type: DataTypes.DECIMAL,
+        allowNull: false,
+        validate: {
+          isNumeric: true,
+          notNull: true,
+          notEmpty: true,
+          isCorrectPrice(newPrice) {
+            if (newPrice < 0) {
+              throw new Error("Price cannot be this low");
+            }
+          },
+        },
+      },
+      isUsed: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
+        allowNull: false,
+      },
+      serialNumber: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          notNull: true,
+          isAlphanumeric: true,
+          notEmpty: true,
+        },
+      },
+    },
+    {
+      sequelize,
+      modelName: "Car",
+      tableName: "cars",
+      underscored: true,
+    }
+  );
   return Car;
 };
