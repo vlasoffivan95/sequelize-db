@@ -1,7 +1,7 @@
 {
   "development": {
     "username": "postgres",
-    "password": "Qwerty21",
+    "password": "Qwerty12",
     "database": "sequelize-db",
     "host": "127.0.0.1",
     "dialect": "postgres"
