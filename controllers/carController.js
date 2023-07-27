@@ -45,3 +45,20 @@ module.exports.updateCar2 = async (req, res, next) => {
   const updatedCar = await car.update(body, { returning: true });
   res.send({ data: updatedCar });
 };
+
+module.exports.deleteCar = async (req, res, next) => {
+  const {
+    params: { carId },
+  } = req;
+  const deletedCar = await Car.destroy({ where: { id: carId } });
+  res.send({ data: carId });
+};
+
+module.exports.deleteCarv2 = async (req, res, next) => {
+  const {
+    params: { carId },
+  } = req;
+  const car = await Car.findByPk(carId);
+  await car.destroy();
+  res.send({ data: car });
+};
