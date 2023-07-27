@@ -1,0 +1,8 @@
+PUT http://localhost:5001/carsv2/1
+Content-Type: application/json
+
+
+{
+    "manufacturer":"Toyota",
+    "model":"Prius"
+}

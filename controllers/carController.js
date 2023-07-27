@@ -21,3 +21,27 @@ module.exports.getCar = async (req, res, next) => {
   // const [car] = await Car.findAll({ where: { id: carId }, });
   // res.send({ data: car });
 };
+
+module.exports.updateCar = async (req, res, next) => {
+  const {
+    params: { carId },
+    body,
+  } = req;
+
+  const [updateRows, [car]] = await Car.update(body, {
+    where: { id: carId },
+    returning: true,
+  });
+  res.send({ data: car });
+};
+
+module.exports.updateCar2 = async (req, res, next) => {
+  const {
+    params: { carId },
+    body,
+  } = req;
+  const car = await Car.findByPk(carId);
+
+  const updatedCar = await car.update(body, { returning: true });
+  res.send({ data: updatedCar });
+};
