@@ -1,0 +1,11 @@
+POST http://localhost:5001/cars
+Content-Type: application/json
+
+{
+    "model":"Astra",
+    "manufacturer": "Opel",
+    "modelYear":2011,
+    "price":99999.99,
+    "isUsed":false,
+    "serialNumber":"UX4231233ffff333123572"
+}
