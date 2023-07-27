@@ -4,5 +4,6 @@ const router = express.Router();
 
 router.post("/cars", CarController.createCar);
 router.get("/cars", CarController.getCars)
+router.get("/cars/:carId", CarController.getCar)
 
 module.exports = router;
