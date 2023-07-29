@@ -1,0 +1,8 @@
+POST http://localhost:5001/cars/7/reviews
+Content-Type: application/json 
+
+{
+    "title":"Best car ever",
+    "body":"Car top12",
+    "rating":10
+}
