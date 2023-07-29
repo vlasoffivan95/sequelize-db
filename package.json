@@ -22,6 +22,7 @@
   "homepage": "https://github.com/vlasoffivan95/sequelize-db#readme",
   "dependencies": {
     "express": "^4.18.2",
+    "http-errors": "^2.0.0",
     "pg": "^8.11.1",
     "pg-hstore": "^2.3.4",
     "sequelize": "^6.32.1"

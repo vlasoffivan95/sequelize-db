@@ -1,8 +1,8 @@
-PUT http://localhost:5001/carsv2/1
+PUT http://localhost:5001/cars/51
 Content-Type: application/json
 
 
 {
     "manufacturer":"Toyota",
-    "model":"Prius"
+    "model":"Prius1"
 }
