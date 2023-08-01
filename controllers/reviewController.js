@@ -1,4 +1,5 @@
 const { Review } = require("../models");
+const review = require("../models/review");
 module.exports.createReview = async (req, res, next) => {
   const { body, car } = req;
   try {
@@ -13,4 +14,46 @@ module.exports.getReviews = async (req, res, next) => {
   const { car } = req;
   const reviews = await car.getReviews();
   res.send({ data: reviews });
+};
+
+module.exports.getReview = async (req, res, next) => {
+  const {
+    params: { reviewId },
+  } = req;
+  const review = await Review.findByPk(reviewId);
+  if (!review) {
+    return next(createHttpError(404, "Review not found"));
+  }
+  res.send({ data: review });
+};
+
+module.exports.updateReview = async (req, res, next) => {
+  const {
+    body,
+    params: { reviewId },
+  } = req;
+  try {
+    const [rowsUpdated, [review]] = await Review.update(body, {
+      where: { id: reviewId },
+      returning: true,
+    });
+
+    if (rowsUpdated === 1) {
+      return res.send({ data: review });
+    }
+    throw createHttpError(404, "Review not found");
+  } catch (error) {
+    next(error);
+  }
+};
+
+module.exports.deleteReview = async (req, res, next) => {
+  const {
+    params: { reviewId },
+  } = req;
+  const deletedRows = await Review.destroy({ where: { id: reviewId } });
+  if (deletedRows === 1) {
+    return res.send({ data: reviewId });
+  }
+  next(createHttpError(404, "Review Not Found!"));
 };

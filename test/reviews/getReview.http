@@ -1,1 +1,1 @@
-GET http://localhost:5001/cars/7/reviews
+GET http://localhost:5001/cars/5/reviews/1
