@@ -1,5 +1,5 @@
 const createHttpError = require("http-errors");
-const { Car } = require("../models");
+const { Car, Review,Seller } = require("../models");
 
 module.exports.createCar = async (req, res, next) => {
   try {
@@ -13,7 +13,10 @@ module.exports.createCar = async (req, res, next) => {
 
 module.exports.getCars = async (req, res, next) => {
   // const cars = await Car.findAll({ attributes: { exclude: ["updatedAt"] } });
-  const cars = await Car.findAll({ where: { isUsed: false } });
+  const cars = await Car.findAll({
+    include: [{ model: Review, required: true }, {model:Seller, as:"sellers", attributes:['name'] ,through:{attributes:[]}}],
+  });
+
   res.send({ data: cars });
 };
 

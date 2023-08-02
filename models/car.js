@@ -17,6 +17,7 @@ module.exports = (sequelize, DataTypes) => {
       Car.belongsToMany(models.Seller, {
         through: "cars_to_sellers",
         foreignKey: "carId",
+        as:"sellers"
       });
     }
   }
@@ -74,6 +75,7 @@ module.exports = (sequelize, DataTypes) => {
           notEmpty: true,
         },
       },
+      
     },
     {
       sequelize,

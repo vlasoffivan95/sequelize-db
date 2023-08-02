@@ -23,7 +23,8 @@ module.exports.getSeller = async (req, res, next) => {
   if (!seller) {
     return next(createHttpError(404, "Seller not found"));
   }
-  res.send({ data: seller });
+  const cars = await seller.getCars();
+  res.send({ data: { ...seller.toJSON(), cars } });
 };
 
 module.exports.updateSeller = async (req, res, next) => {
@@ -50,4 +51,18 @@ module.exports.deleteSeller = async (req, res, next) => {
     return next(createHttpError(404, "Seller not found"));
   }
   res.send({ data: sellerId });
+};
+
+module.exports.addCarsToSeller = async (req, res, next) => {
+  const {
+    params: { sellerId },
+    car,
+  } = req;
+  const seller = await Seller.findByPk(sellerId);
+
+  if (!seller) {
+    return next();
+  }
+  await seller.addCar(car);
+  res.send({ data: "Car added" });
 };
