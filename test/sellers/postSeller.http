@@ -1,0 +1,9 @@
+POST http://localhost:5001/sellers
+Content-Type: application/json
+
+{
+    
+"name":"BMW", 
+"address":"Germany",
+"phone":"0955799657"
+}
