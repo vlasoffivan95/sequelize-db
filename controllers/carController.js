@@ -1,5 +1,5 @@
 const createHttpError = require("http-errors");
-const { Car, Review,Seller } = require("../models");
+const { Car, Review, Seller } = require("../models");
 
 module.exports.createCar = async (req, res, next) => {
   try {
@@ -14,7 +14,15 @@ module.exports.createCar = async (req, res, next) => {
 module.exports.getCars = async (req, res, next) => {
   // const cars = await Car.findAll({ attributes: { exclude: ["updatedAt"] } });
   const cars = await Car.findAll({
-    include: [{ model: Review, required: true }, {model:Seller, as:"sellers", attributes:['name'] ,through:{attributes:[]}}],
+    include: [
+      { model: Review, required: true },
+      {
+        model: Seller,
+        as: "sellers",
+        attributes: ["name"],
+        through: { attributes: [] },
+      },
+    ],
   });
 
   res.send({ data: cars });
@@ -97,5 +105,26 @@ module.exports.deleteCarv2 = async (req, res, next) => {
   } else {
     await car.destroy();
     res.send({ data: car });
+  }
+};
+
+module.exports.addPicToCar = async (req, res, next) => {
+  const {
+    body,
+    file,
+    params: { carId },
+  } = req;
+  try {
+    const [updatedCars, [car]] = await Car.update(
+      { picPath: file.filename },
+      { where: { id: carId }, returning: true }
+    );
+
+    if (updatedCars !== 1) {
+      throw createHttpError(404, "Car not found!");
+    }
+    res.send({ data: car });
+  } catch (error) {
+    next(error);
   }
 };

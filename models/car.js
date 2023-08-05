@@ -17,7 +17,7 @@ module.exports = (sequelize, DataTypes) => {
       Car.belongsToMany(models.Seller, {
         through: "cars_to_sellers",
         foreignKey: "carId",
-        as:"sellers"
+        as: "sellers",
       });
     }
   }
@@ -75,7 +75,12 @@ module.exports = (sequelize, DataTypes) => {
           notEmpty: true,
         },
       },
-      
+      picPath: {
+        type: DataTypes.STRING,
+        validate: {
+          notEmpty: true,
+        },
+      },
     },
     {
       sequelize,
